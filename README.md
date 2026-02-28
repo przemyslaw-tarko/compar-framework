@@ -1,5 +1,6 @@
 # Compar Frameworks: Selenium vs Cypress vs Playwright
 
+
 Projekt do porównania trzech popularnych frameworków E2E (Selenium, Cypress, Playwright) na tej samej aplikacji testowej (Bookstore). Każdy framework działa w osobnym kontenerze, a aplikacja testowa w osobnych kontenerach z własną siecią.
 
 ## Założenia
