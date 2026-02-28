@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
-test('Bookstore smoke (Playwright)', async ({ page }) => {
+test('title contains "Test App" (Playwright)', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('body')).toBeVisible();
-  await expect(page).toHaveTitle(/.+/);
+  await expect(page).toHaveTitle(/Test App/);
 });
