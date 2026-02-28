@@ -1,7 +1,7 @@
 describe('Bookstore smoke (Cypress)', () => {
-  it('loads homepage', () => {
+  it('title contains "Test App"', () => {
     cy.visit('/');
     cy.get('body').should('be.visible');
-    cy.title().should('not.be.empty');
+    cy.title().should('include', 'Test App');
   });
 });

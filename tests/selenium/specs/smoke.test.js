@@ -17,10 +17,10 @@ describe('Bookstore smoke (Selenium)', function () {
     if (driver) await driver.quit();
   });
 
-  it('loads homepage', async () => {
+  it('title contains "Test App"', async () => {
     await driver.get(baseUrl);
     await driver.wait(until.elementLocated(By.css('body')), 10000);
     const title = await driver.getTitle();
-    assert.ok(title && title.length > 0);
+    assert.ok(title.includes('Test App'));
   });
 });
