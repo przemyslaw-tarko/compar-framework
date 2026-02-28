@@ -5,4 +5,4 @@ describe('Bookstore smoke (Cypress)', () => {
     cy.title().should('include', 'Test App');
   });
 });
-// test PR i CI
+// test PR i CI nr 2
