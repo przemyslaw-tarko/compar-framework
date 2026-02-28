@@ -239,17 +239,3 @@ jobs:
           done
           exit $fail
 
-  auto-merge-to-main:
-    needs: [ci-summary]
-    if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main' && needs.ci-summary.result == 'success'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Enable auto-merge
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.AUTO_PR_TOKEN }}
-          pull-request-number: ${{ github.event.pull_request.number }}
-          merge-method: squash
