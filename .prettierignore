@@ -1,0 +1,3 @@
+apps/test-bookstore/**
+node_modules/**
+reports/**
