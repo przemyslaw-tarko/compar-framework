@@ -1,5 +1,3 @@
-const prettier = require('eslint-config-prettier');
-
 module.exports = [
   {
     ignores: [
@@ -17,6 +15,5 @@ module.exports = [
     rules: {
       'no-console': 'off'
     }
-  },
-  prettier
+  }
 ];

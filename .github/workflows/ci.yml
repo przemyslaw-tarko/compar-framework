@@ -70,9 +70,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Format check
-        run: npm run format:check
-
       - name: Validate docker compose
         run: docker compose -f apps/bookstore/docker-compose.yml -f docker-compose.tests.yml config > /dev/null
 
