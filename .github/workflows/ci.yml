@@ -41,7 +41,6 @@ jobs:
             playwright:
               - 'tests/playwright/**'
             shared:
-              - 'packages/shared/**'
               - 'scripts/**'
               - 'apps/bookstore/**'
               - 'docker-compose.tests.yml'
@@ -89,6 +88,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Start app
         run: node scripts/compose.js app up -d
 
@@ -133,6 +135,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Start app
         run: node scripts/compose.js app up -d
 
@@ -176,6 +181,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Start app
         run: node scripts/compose.js app up -d

@@ -14,7 +14,6 @@ Projekt do porównania trzech popularnych frameworków E2E (Selenium, Cypress, P
 ```
 apps/bookstore/            # docker-compose dla aplikacji testowej (obrazy Docker)
 apps/test-bookstore/       # submodule: źródła aplikacji testowej (fork)
-packages/shared/           # wspólne helpery (na później)
 tests/selenium/            # Selenium + Mocha
 /tests/cypress/            # Cypress
 /tests/playwright/         # Playwright Test

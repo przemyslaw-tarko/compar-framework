@@ -4,8 +4,7 @@
   "version": "0.1.0",
   "packageManager": "npm@10.2.4",
   "workspaces": [
-    "tests/*",
-    "packages/*"
+    "tests/*"
   ],
   "scripts": {
     "env:up": "node scripts/compose.js app up -d",
