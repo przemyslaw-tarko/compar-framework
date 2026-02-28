@@ -18,7 +18,7 @@ jobs:
 
       - name: Create PR if missing
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.AUTO_PR_TOKEN || secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.ref_name }}
         run: |
           set -euo pipefail
