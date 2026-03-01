@@ -24,11 +24,20 @@ jobs:
           set -euo pipefail
           if gh pr view "$BRANCH" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "PR already exists for $BRANCH"
-            exit 0
+          else
+            gh pr create \
+              --repo "$GITHUB_REPOSITORY" \
+              --base main \
+              --head "$BRANCH" \
+              --title "Auto PR: $BRANCH" \
+              --body "Automated PR created from push."
           fi
-          gh pr create \
-            --repo "$GITHUB_REPOSITORY" \
-            --base main \
-            --head "$BRANCH" \
-            --title "Auto PR: $BRANCH" \
-            --body "Automated PR created from push."
+
+      - name: Trigger CI
+        env:
+          GH_TOKEN: ${{ secrets.AUTO_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          pr_number="$(gh pr view "$BRANCH" --repo "$GITHUB_REPOSITORY" --json number -q .number)"
+          gh workflow run CI --repo "$GITHUB_REPOSITORY" -f pr_number="$pr_number"

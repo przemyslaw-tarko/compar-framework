@@ -10,15 +10,25 @@ jobs:
   auto-merge:
     if: >
       github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'pull_request'
+      github.event.workflow_run.event == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
+      - name: Fetch PR number
+        id: pr
+        env:
+          GH_TOKEN: ${{ secrets.AUTO_PR_TOKEN || secrets.GITHUB_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          set -euo pipefail
+          pr_number="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID" --jq '.pull_requests[0].number')"
+          echo "number=$pr_number" >> "$GITHUB_OUTPUT"
+
       - name: Enable auto-merge
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.AUTO_PR_TOKEN }}
-          pull-request-number: ${{ github.event.workflow_run.pull_requests[0].number }}
+          pull-request-number: ${{ steps.pr.outputs.number }}
           merge-method: squash
