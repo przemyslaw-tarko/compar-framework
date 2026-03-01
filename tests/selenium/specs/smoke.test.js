@@ -24,3 +24,5 @@ describe('Bookstore smoke (Selenium)', function () {
     assert.ok(title.includes('Test App'));
   });
 });
+
+// test s 1
