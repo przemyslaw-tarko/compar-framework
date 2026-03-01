@@ -16,6 +16,9 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Fetch PR number
         id: pr
         env:
