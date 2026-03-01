@@ -1,4 +1,4 @@
-# Compar-Framework — porównanie Selenium / Cypress / Playwright + CI/CD + TestRail  
+# Compar-Framework — porównanie Selenium / Cypress / Playwright + CI/CD + TestRail
 
 Projekt realizowany w ramach pracy inżynierskiej – środowisko badawcze do porównania frameworków E2E w architekturze kontenerowej.
 
