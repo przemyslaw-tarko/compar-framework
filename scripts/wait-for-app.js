@@ -5,6 +5,7 @@ const path = require('node:path');
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:8080';
+const verbose = process.env.VERBOSE_LOGS === 'true';
 const timeoutMs = 180000;
 const intervalMs = 3000;
 
@@ -21,14 +22,14 @@ async function check() {
 }
 
 (async () => {
-  process.stdout.write(`Waiting for app at ${baseUrl}\n`);
+  if (verbose) process.stdout.write(`Waiting for app at ${baseUrl}\n`);
   while (Date.now() - start < timeoutMs) {
     const ok = await check();
     if (ok) {
-      process.stdout.write('App is ready.\n');
+      if (verbose) process.stdout.write('App is ready.\n');
       process.exit(0);
     }
-    process.stdout.write('.');
+    if (verbose) process.stdout.write('.');
     await new Promise((r) => setTimeout(r, intervalMs));
   }
   process.stdout.write('\nTimeout waiting for app.\n');
