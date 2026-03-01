@@ -135,5 +135,5 @@ curl -I http://localhost:8080
 - Integracja z TestRail (publikacja wyników + mapowanie case’ów).
 - Raport zbiorczy z wynikami w CI.
 
-## Autor
+## Autor 
 Przemysław Tarko
