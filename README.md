@@ -2,10 +2,12 @@
 
 Projekt realizowany w ramach pracy inżynierskiej – środowisko badawcze do porównania frameworków E2E w architekturze kontenerowej.  
 
-Repozytorium służy do porównania popularnych frameworków testów E2E:
-- **Selenium**
-- **Cypress**
-- **Playwright**
+## Założenia
+- Jednolite scenariusze E2E w każdym frameworku (tu: proste smoke testy).
+- Uruchamianie w Dockerze na osobnych kontenerach.
+- Raporty HTML + JUnit w `reports/`.
+- Integracja z TestRail przez zmienne środowiskowe.
+- CI/CD w GitHub Actions: auto‑PR → CI → auto‑merge → CD (publikacja obrazów testów).
 
 Porównanie obejmuje:
 - łatwość konfiguracji i uruchomienia,
@@ -87,7 +89,10 @@ npm run test:cypress
 npm run test:playwright
 ```
 
-Testy są uruchamiane w kontenerach runnerów przez `docker compose` (via `scripts/compose.js`).
+## Proste przykłady (co robi każdy test)
+- Selenium: otwiera stronę główną i sprawdza, czy tytuł zawiera `Test App`.
+- Cypress: otwiera `/` i sprawdza, czy tytuł zawiera `Test App`.
+- Playwright: otwiera `/` i sprawdza, czy tytuł zawiera `Test App`.
 
 ---
 
@@ -97,7 +102,42 @@ Testy są uruchamiane w kontenerach runnerów przez `docker compose` (via `scrip
 - Cypress: tytuł strony zawiera `Test App`.
 - Playwright: tytuł strony zawiera `Test App`.
 
----
+## CI/CD (skrót)
+- `auto-pr.yml` tworzy PR dla każdego brancha poza `main`.
+- `ci.yml` uruchamia lint + testy tylko tych frameworków, których kod się zmienił (tylko na PR).
+- `auto-merge.yml` włącza auto‑merge po zielonym CI.
+- `cd.yml` publikuje obrazy testów do GHCR po merge do `main`.
+
+## Logi (cisza / debug)
+Domyślnie logi z oczekiwania na aplikację i z Docker Compose są wyciszone.
+Aby włączyć pełne logi:
+```
+VERBOSE_LOGS=true npm run test:selenium
+```
+
+## Porządek z branchami
+W repo jest włączone **Automatically delete head branches**, więc po merge PR zdalny branch jest kasowany automatycznie.
+Lokalne branche możesz sprzątać ręcznie:
+```
+git fetch --prune
+git branch -d <branch>
+```
+
+## CD: obrazy testów w GHCR
+Po merge do `main` publikowane są obrazy:
+- `ghcr.io/przemyslaw-tarko/compar-selenium-tests:latest`
+- `ghcr.io/przemyslaw-tarko/compar-cypress-tests:latest`
+- `ghcr.io/przemyslaw-tarko/compar-playwright-tests:latest`
+
+Pobieranie obrazów:
+```
+docker pull ghcr.io/przemyslaw-tarko/compar-selenium-tests:latest
+```
+
+Jeśli obrazy są prywatne, zaloguj się do GHCR:
+```
+echo <TOKEN> | docker login ghcr.io -u przemyslaw-tarko --password-stdin
+```
 
 ## Raporty i wyniki
 
